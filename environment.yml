@@ -1,8 +1,8 @@
-name: shriley-environment
+name: shirley-environment
 channels:
   - defaults
 dependencies:
-  - python=3.8.0=hff0d562_2
+  - python=3.8.0
   - pip
   - pip:
     - matplotlib
