@@ -1,0 +1,9 @@
+name: shriley-environment
+channels:
+  - defaults
+dependencies:
+  - python=3.8.0=hff0d562_2
+  - numpy
+  - pip
+  - pip:
+    - matplotlib

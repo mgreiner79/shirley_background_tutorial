@@ -4,8 +4,6 @@ Created on Fri Jul 31 17:29:54 2020
 
 @author: Mark
 """
-import numpy as np
-
 from converters.vamas import VamasHeader, Block
 
 class VamasParser():
@@ -330,7 +328,7 @@ class VamasParser():
                 name = 'y' + str(v)
             data_dict[name] = [] 
         
-        d = list(np.array(self.data[:block.numOrdValues], dtype=float))
+        d = [float(i) for i in self.data[:block.numOrdValues]]
         
         self.data = self.data[block.numOrdValues:]
         
