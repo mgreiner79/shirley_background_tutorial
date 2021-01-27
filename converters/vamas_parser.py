@@ -5,6 +5,7 @@ Created on Fri Jul 31 17:29:54 2020
 @author: Mark
 """
 from converters.vamas import VamasHeader, Block
+import requests
 
 class VamasParser():
     """A parser for reading vamas files.
@@ -87,7 +88,7 @@ class VamasParser():
                                 'maxOrdValue1', 'minOrdValue2', 'maxOrdValue2', 
                                 'dataString']
 
-    def parseFile(self, filepath, **kwargs):
+    def parseFile(self, url, **kwargs):
         """Parse the vamas file into a list of dictionaries.
         
         This method should be called inside the Converter object.
@@ -96,20 +97,22 @@ class VamasParser():
         filepath: STRING
         The location and name of the vamas file to be parsed.
         """
-        self._readLines(filepath)
+        self._readLines(url)
         self._parseHeader()
         self._parseBlocks()
         return self._buildDict()
 
-    def _readLines(self, filepath):
+    def _readLines(self, url):
         self.data = []
-        self.filepath = filepath
+        self.filepath = url
         
-        with open(filepath, 'rb') as fp:
-            for line in fp:
-                if line.endswith(b'\r\n'):
-                    self.data += [line.decode('utf-8', errors = 'ignore').strip()]
+        r = requests.get(url)
+        text = r.text
         
+        for line in text.splitlines():
+
+            self.data += [line]
+    
     def _parseHeader(self):
         """Parse the vama header into a VamasHeader object.
         

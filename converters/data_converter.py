@@ -4,7 +4,6 @@ Created on Mon Jul 20 11:32:48 2020
 
 @author: Mark
 """
-
 from converters.vamas_parser import VamasParser
 
 class DataConverter():
@@ -21,9 +20,6 @@ class DataConverter():
         All writers should expose the method write(filename).
         """
         self._parser_methods = {'Vamas': VamasParser,}
-        self._write_methods = {'JSON':JSONWriter,
-                               'Vamas':VamasWriter,
-                               'Excel':ExcelWriter}
         self._extensions = {'vms': 'Vamas',}
         
     def load(self, filename, **kwargs):
@@ -36,18 +32,13 @@ class DataConverter():
         **kwargs: 
             in_format: The file format of the loaded file.
         """
+        
         if 'in_format' not in kwargs.keys():
             in_format = self._extensions[filename.rsplit('.',1)[-1].lower()]
-            print(in_format)
         else:
             in_format = kwargs['in_format']
         
         self.parser = self._parser_methods[in_format]()
         self.data = self.parser.parseFile(filename, **kwargs)
-        '''try:
-            self.parser = self._parser_methods[in_format]()
-            self.data = self.parser.parseFile(filename)
-            
-        except:
-            print("input file format not supported")'''
-           
+        
+
